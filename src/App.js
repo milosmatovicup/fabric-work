@@ -3,6 +3,7 @@ import EditorCanvas from './EditorCanvas';
 import './App.css';
 
 function App() {
+  console.log("git asdfsfd");
   return (
     <div className="App">
       <Toolbox />
