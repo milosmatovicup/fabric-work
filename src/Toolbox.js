@@ -1,9 +1,39 @@
-import { FabricImage, IText } from "fabric";
+import { FabricImage, IText, filters } from "fabric";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Toolbox = ({ canvas }) => {
+const Toolbox = ({ canvas, currentFilter, setCurrentFilter }) => {
     const [drawingMode, setDrawingMode] = useState(false);
+
+    useEffect(() => {
+        if(!canvas || 
+          !canvas.getActiveObject() || 
+          !canvas.getActiveObject().isType('image')) return;
+      
+        function getSelectedFilter() {
+          switch(currentFilter) {
+            case 'sepia':
+              return new filters.Sepia();
+            case 'vintage':
+              return new filters.Vintage();
+            case 'invert':
+              return new filters.Invert();
+            case 'polaroid':
+              return new filters.Polaroid();
+            case 'grayscale':
+              return new filters.Grayscale();
+            default:
+              return null;
+          }
+        }
+        const filter = getSelectedFilter();
+        const img = canvas.getActiveObject();
+      
+        img.filters=filter ? [filter] : [];
+        img.applyFilters();
+        canvas.renderAll();
+      }, [currentFilter, canvas]);
+
     function fileHandler(e) {
         const file = e.target.files[0];
         const reader = new FileReader();
@@ -45,6 +75,19 @@ const Toolbox = ({ canvas }) => {
             <button title="Toggle drawing mode" onClick={toggleDrawingMode} className={drawingMode ? 'active' : ''}>
                 <FontAwesomeIcon icon="pencil" />
             </button>
+            <button title="Filters"
+                onClick={() => setCurrentFilter(currentFilter ? null : 'sepia')}
+                className={currentFilter ? 'active' : ''}>
+                <FontAwesomeIcon icon="filter" />
+            </button>
+            {currentFilter && <select onChange={(e) => setCurrentFilter(e.target.value)} value={currentFilter}>
+                <option value="sepia">Sepia</option>
+                <option value="vintage">Vintage</option>
+                <option value="invert">Invert</option>
+                <option value="polaroid">Polaroid</option>
+                <option value="grayscale">Grayscale</option>
+            </select>
+            }
         </div>
     );
 };
