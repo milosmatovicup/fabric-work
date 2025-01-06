@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     const canvas = new Canvas(canvasRef.current, { backgroundColor: 'white' });
-    canvas.setDimensions({ width: 1000, height: 500 });
+    canvas.setDimensions({ width: 1500, height: 800 });
     setCanvas(canvas);
 
     return () => canvas.dispose();
