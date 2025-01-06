@@ -1,4 +1,4 @@
-import { FabricImage } from "fabric";
+import { FabricImage, IText } from "fabric";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Toolbox = ({ canvas }) => {
@@ -16,6 +16,12 @@ const Toolbox = ({ canvas }) => {
         e.target.value = '';
     }
 
+    function addText() {
+        const text = new IText('Edit this text');
+        canvas.add(text);
+        canvas.centerObject(text);
+        canvas.setActiveObject(text);
+    };
 
     return (
         <div className="toolbox">
@@ -25,6 +31,9 @@ const Toolbox = ({ canvas }) => {
                     type="file"
                     accept=".png, .jpg, .jpeg"
                     onChange={fileHandler} />
+            </button>
+            <button title="Add text" onClick={addText}>
+                <FontAwesomeIcon icon="font" />
             </button>
         </div>
     );
