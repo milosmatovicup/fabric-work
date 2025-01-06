@@ -60,6 +60,12 @@ const Toolbox = ({ canvas, currentFilter, setCurrentFilter }) => {
         setDrawingMode(canvas.isDrawingMode);
     }
 
+    function clearAll() {
+        if(window.confirm('Are you sure you want to clear all?')) {
+            canvas.remove(...canvas.getObjects());
+        }
+    }
+
     return (
         <div className="toolbox">
             <button title="Add image">
@@ -88,6 +94,9 @@ const Toolbox = ({ canvas, currentFilter, setCurrentFilter }) => {
                 <option value="grayscale">Grayscale</option>
             </select>
             }
+            <button title="Clear all" onClick={clearAll}>
+                <FontAwesomeIcon icon="trash" />
+            </button>
         </div>
     );
 };
