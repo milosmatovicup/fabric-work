@@ -1,7 +1,9 @@
 import { FabricImage, IText } from "fabric";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
 const Toolbox = ({ canvas }) => {
+    const [drawingMode, setDrawingMode] = useState(false);
     function fileHandler(e) {
         const file = e.target.files[0];
         const reader = new FileReader();
@@ -23,6 +25,11 @@ const Toolbox = ({ canvas }) => {
         canvas.setActiveObject(text);
     };
 
+    function toggleDrawingMode() {
+        canvas.isDrawingMode = !canvas.isDrawingMode;
+        setDrawingMode(canvas.isDrawingMode);
+    }
+
     return (
         <div className="toolbox">
             <button title="Add image">
@@ -34,6 +41,9 @@ const Toolbox = ({ canvas }) => {
             </button>
             <button title="Add text" onClick={addText}>
                 <FontAwesomeIcon icon="font" />
+            </button>
+            <button title="Toggle drawing mode" onClick={toggleDrawingMode} className={drawingMode ? 'active' : ''}>
+                <FontAwesomeIcon icon="pencil" />
             </button>
         </div>
     );

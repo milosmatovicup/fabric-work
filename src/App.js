@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import Toolbox from './Toolbox';
 import EditorCanvas from './EditorCanvas';
 import './App.css';
-import { Canvas } from 'fabric';
+import { Canvas, PencilBrush } from 'fabric';
 
 function App() {
 
@@ -13,6 +13,11 @@ function App() {
     const canvas = new Canvas(canvasRef.current, { backgroundColor: 'white' });
     canvas.setDimensions({ width: 1500, height: 800 });
     setCanvas(canvas);
+
+    const brush = new PencilBrush(canvas);
+    brush.color = 'black';
+    brush.width = 5;
+    canvas.freeDrawingBrush = brush;
 
     return () => canvas.dispose();
   }, [canvasRef, setCanvas]);
