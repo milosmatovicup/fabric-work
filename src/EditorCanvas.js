@@ -10,11 +10,22 @@ const EditorCanvas = forwardRef(({ canvas, setCurrentFilter }, ref) => {
             setCurrentFilter(filter ? filter.type.toLowerCase() : null);
         }
 
+        function handleKeyDown(e) {
+            if(e.key === 'Delete') {
+                for(const obj of canvas.getActiveObjects()) {
+                    canvas.remove(obj);
+                    canvas.discardActiveObject();
+                }
+            }
+        }
+
         canvas.on({
             'selection:created': handleSection,
             'selection:updated': handleSection,
             'selection:cleared': handleSection
         });
+
+        document.addEventListener('keydown', handleKeyDown, false);
 
         return () => {
             canvas.off({
@@ -22,6 +33,7 @@ const EditorCanvas = forwardRef(({ canvas, setCurrentFilter }, ref) => {
                 'selection:updated': handleSection,
                 'selection:cleared': handleSection
             });
+            document.removeEventListener('keydown', handleKeyDown, false);
         }
     }, [canvas, setCurrentFilter]);
 
