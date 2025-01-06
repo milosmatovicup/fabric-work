@@ -16,7 +16,6 @@ function App() {
 
     return () => canvas.dispose();
   }, [canvasRef, setCanvas]);
-
   return (
     <div className="editor">
       <Toolbox 
