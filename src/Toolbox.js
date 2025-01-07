@@ -66,6 +66,13 @@ const Toolbox = ({ canvas, currentFilter, setCurrentFilter }) => {
         }
     }
 
+    function downLoadImage() {
+        const link = document.createElement('a');
+        link.download = 'photo_editor_image.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    }
+
     return (
         <div className="toolbox">
             <button title="Add image">
@@ -96,6 +103,9 @@ const Toolbox = ({ canvas, currentFilter, setCurrentFilter }) => {
             }
             <button title="Clear all" onClick={clearAll}>
                 <FontAwesomeIcon icon="trash" />
+            </button>
+            <button title="Download as image" onClick={downLoadImage} >
+                <FontAwesomeIcon icon="download" />
             </button>
         </div>
     );
